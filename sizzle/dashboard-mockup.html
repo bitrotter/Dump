@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M365 Admin Portal - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #f5f5f5;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .header-content h1 {
+            font-size: 28px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .user-info button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .user-info button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+            padding: 0;
+        }
+
+        .dashboard-nav button {
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .dashboard-nav button:hover {
+            color: #667eea;
+        }
+
+        .dashboard-nav button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .dashboard-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 30px 20px;
+        }
+
+        .tab-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .users-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .users-table th {
+            background: #f9f9f9;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .users-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #666;
+        }
+
+        .users-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .users-table td:last-child {
+            display: flex;
+            gap: 10px;
+        }
+
+        button.btn-danger,
+        button.btn-warning {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        button.btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        button.btn-danger:hover {
+            background: #c0392b;
+        }
+
+        button.btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        button.btn-warning:hover {
+            background: #d68910;
+        }
+
+        .license-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .license-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .license-card h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .license-card .number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .license-card .label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .onedrive-chart {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .info-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .group-list {
+            margin-top: 20px;
+        }
+
+        .group-item {
+            padding: 12px;
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+
+        .group-item .name {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .group-item .type {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .dashboard-nav {
+                flex-wrap: wrap;
+            }
+
+            .dashboard-nav button {
+                flex: 1;
+                min-width: 100px;
+            }
+
+            .users-table td:last-child {
+                flex-direction: column;
+            }
+
+            button.btn-danger,
+            button.btn-warning {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>M365 Admin Portal</h1>
+                <div class="user-info">
+                    <span>Welcome, admin</span>
+                    <button onclick="alert('Logged out')">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="dashboard-nav">
+            <button class="tab-btn active" onclick="switchTab('users')">Users</button>
+            <button class="tab-btn" onclick="switchTab('licenses')">Licenses</button>
+            <button class="tab-btn" onclick="switchTab('onedrive')">OneDrive</button>
+            <button class="tab-btn" onclick="switchTab('groups')">Groups</button>
+            <button class="tab-btn" onclick="switchTab('reports')">Reports</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            
+            <!-- Users Tab -->
+            <div id="users" class="tab-content active">
+                <h2>Users Management</h2>
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>jsmith</td>
+                                <td>john.smith@company.com</td>
+                                <td>
+                                    <button class="btn-danger" onclick="alert('User disabled')">Disable</button>
+                                    <button class="btn-warning" onclick="alert('User locked')">Lock</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Johnson</td>
+                                <td>sjohnson</td>
+                                <td>sarah.johnson@company.com</td>
+                                <td>
+                                    <button class="btn-danger" onclick="alert('User disabled')">Disable</button>
+                                    <button class="btn-warning" onclick="alert('User locked')">Lock</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Michael Chen</td>
+                                <td>mchen</td>
+                                <td>michael.chen@company.com</td>
+                                <td>
+                                    <button class="btn-danger" onclick="alert('User disabled')">Disable</button>
+                                    <button class="btn-warning" onclick="alert('User locked')">Lock</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Emily Rodriguez</td>
+                                <td>erodriguez</td>
+                                <td>emily.rodriguez@company.com</td>
+                                <td>
+                                    <button class="btn-danger" onclick="alert('User disabled')">Disable</button>
+                                    <button class="btn-warning" onclick="alert('User locked')">Lock</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>David Williams</td>
+                                <td>dwilliams</td>
+                                <td>david.williams@company.com</td>
+                                <td>
+                                    <button class="btn-danger" onclick="alert('User disabled')">Disable</button>
+                                    <button class="btn-warning" onclick="alert('User locked')">Lock</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Licenses Tab -->
+            <div id="licenses" class="tab-content">
+                <h2>License Management</h2>
+                <p>Organization-wide license summary and per-user license details</p>
+                
+                <div class="license-grid">
+                    <div class="license-card">
+                        <h3>Microsoft 365 Business Standard</h3>
+                        <div class="number">45</div>
+                        <div class="label">Licenses assigned</div>
+                    </div>
+                    <div class="license-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>Microsoft 365 Business Premium</h3>
+                        <div class="number">28</div>
+                        <div class="label">Licenses assigned</div>
+                    </div>
+                    <div class="license-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>Office 365 Enterprise E3</h3>
+                        <div class="number">12</div>
+                        <div class="label">Licenses assigned</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">License Utilization</h3>
+                    <div class="onedrive-chart">
+                        <div class="info-item">
+                            <div class="info-label">Total Available Licenses</div>
+                            <div class="info-value">100</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%">85 Used</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OneDrive Tab -->
+            <div id="onedrive" class="tab-content">
+                <h2>OneDrive Usage</h2>
+                <p>Monitor storage usage and quotas for user OneDrive accounts</p>
+                
+                <div class="onedrive-chart">
+                    <div class="info-item">
+                        <div class="info-label">John Smith - OneDrive Storage</div>
+                        <div class="info-value">450 GB / 1000 GB</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%">45%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Sarah Johnson - OneDrive Storage</div>
+                        <div class="info-value">850 GB / 1000 GB</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%">85%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Michael Chen - OneDrive Storage</div>
+                        <div class="info-value">320 GB / 1000 GB</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 32%">32%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Emily Rodriguez - OneDrive Storage</div>
+                        <div class="info-value">920 GB / 1000 GB</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 92%">92%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Groups Tab -->
+            <div id="groups" class="tab-content">
+                <h2>Group Memberships</h2>
+                <p>View user group memberships and permissions across Active Directory and M365</p>
+                
+                <h3 style="margin-top: 20px; margin-bottom: 15px;">John Smith - Group Memberships</h3>
+                <div class="group-list">
+                    <div class="group-item">
+                        <div class="name">Engineering Team</div>
+                        <div class="type">Security Group • Active Directory</div>
+                    </div>
+                    <div class="group-item">
+                        <div class="name">Full-Time Employees</div>
+                        <div class="type">Distribution Group • Active Directory</div>
+                    </div>
+                    <div class="group-item">
+                        <div class="name">Tech Department</div>
+                        <div class="type">Microsoft 365 Group</div>
+                    </div>
+                    <div class="group-item">
+                        <div class="name">Company-Wide Updates</div>
+                        <div class="type">Distribution List • Microsoft 365</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Sarah Johnson - Group Memberships</h3>
+                <div class="group-list">
+                    <div class="group-item">
+                        <div class="name">Finance Department</div>
+                        <div class="type">Security Group • Active Directory</div>
+                    </div>
+                    <div class="group-item">
+                        <div class="name">Full-Time Employees</div>
+                        <div class="type">Distribution Group • Active Directory</div>
+                    </div>
+                    <div class="group-item">
+                        <div class="name">Finance Team</div>
+                        <div class="type">Microsoft 365 Group</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports" class="tab-content">
+                <h2>Reports</h2>
+                <p>Generate and download comprehensive reports on licenses, usage, and group memberships</p>
+                
+                <div style="margin-top: 30px;">
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 15px;">
+                        <h3 style="margin-bottom: 10px;">Generate License Report</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Export current license allocation and usage data</p>
+                        <button class="btn-danger" style="background: #667eea; padding: 10px 20px; border-radius: 5px; width: auto;" onclick="alert('Report generated: license-report-2026-02-16.csv')">Generate Report</button>
+                    </div>
+
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 15px;">
+                        <h3 style="margin-bottom: 10px;">Generate OneDrive Usage Report</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Export OneDrive storage usage by user</p>
+                        <button class="btn-danger" style="background: #667eea; padding: 10px 20px; border-radius: 5px; width: auto;" onclick="alert('Report generated: onedrive-usage-2026-02-16.csv')">Generate Report</button>
+                    </div>
+
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 15px;">
+                        <h3 style="margin-bottom: 10px;">Generate Group Membership Report</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Export user group memberships across AD and M365</p>
+                        <button class="btn-danger" style="background: #667eea; padding: 10px 20px; border-radius: 5px; width: auto;" onclick="alert('Report generated: group-memberships-2026-02-16.csv')">Generate Report</button>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Recent Reports</h3>
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Report Name</th>
+                                <th>Type</th>
+                                <th>Generated By</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>License Report</td>
+                                <td>Licenses</td>
+                                <td>admin</td>
+                                <td>Feb 16, 2026 2:45 PM</td>
+                            </tr>
+                            <tr>
+                                <td>OneDrive Usage Report</td>
+                                <td>OneDrive Usage</td>
+                                <td>admin</td>
+                                <td>Feb 16, 2026 1:30 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Group Membership Report</td>
+                                <td>Group Memberships</td>
+                                <td>admin</td>
+                                <td>Feb 15, 2026 4:15 PM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Deactivate all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Activate clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
