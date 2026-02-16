@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitrotter Dump</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #0d1117;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: monospace;
+        }
+        .container {
+            max-width: 1000px;
+            text-align: center;
+        }
+        svg {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #e94560;
+            border-radius: 8px;
+        }
+        .instructions {
+            color: #4ecca3;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1a1a2e;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" id="bitrotterSvg">
+            <rect width="800" height="600" fill="#1a1a2e"/>
+            <ellipse cx="400" cy="550" rx="450" ry="80" fill="#0f3460" opacity="0.8"/>
+            
+            <text x="100" y="80" font-family="monospace" font-size="20" fill="#ff6b6b" opacity="0.6">10?1</text>
+            <text x="650" y="120" font-family="monospace" font-size="20" fill="#ff6b6b" opacity="0.4">?101</text>
+            <text x="300" y="60" font-family="monospace" font-size="16" fill="#ee5a6f" opacity="0.5">0X0</text>
+            <text x="500" y="100" font-family="monospace" font-size="18" fill="#ff6b6b" opacity="0.3">1??0</text>
+            <text x="200" y="140" font-family="monospace" font-size="16" fill="#ff6b6b" opacity="0.5">X1X0</text>
+            
+            <path d="M 280 400 L 320 500 L 480 500 L 520 400 Z" fill="#2d4059" stroke="#e94560" stroke-width="3"/>
+            <rect x="270" y="380" width="260" height="25" rx="5" fill="#2d4059" stroke="#e94560" stroke-width="3"/>
+            
+            <text x="300" y="370" font-family="monospace" font-size="24" fill="#4ecca3" opacity="0.8">01X0</text>
+            <text x="380" y="355" font-family="monospace" font-size="28" fill="#4ecca3" opacity="0.9">1?01</text>
+            <text x="450" y="368" font-family="monospace" font-size="22" fill="#4ecca3" opacity="0.7">?110</text>
+            
+            <text x="340" y="440" font-family="monospace" font-size="20" fill="#393e46" opacity="0.6">0101</text>
+            <text x="400" y="460" font-family="monospace" font-size="18" fill="#393e46" opacity="0.5">1100</text>
+            <text x="360" y="480" font-family="monospace" font-size="16" fill="#393e46" opacity="0.4">X011</text>
+            
+            <rect x="100" y="420" width="80" height="100" rx="10" fill="#1a1a2e" stroke="#e94560" stroke-width="2"/>
+            <circle cx="140" cy="445" r="15" fill="#16213e" stroke="#e94560" stroke-width="2"/>
+            <text x="115" y="490" font-family="monospace" font-size="14" fill="#ff6b6b">RIP</text>
+            <text x="108" y="510" font-family="monospace" font-size="10" fill="#c44569">NULL</text>
+            
+            <rect x="600" y="440" width="90" height="90" rx="10" fill="#1a1a2e" stroke="#4ecca3" stroke-width="2"/>
+            <circle cx="645" cy="465" r="15" fill="#16213e" stroke="#4ecca3" stroke-width="2"/>
+            <text x="613" y="505" font-family="monospace" font-size="14" fill="#4ecca3">404</text>
+            <text x="610" y="520" font-family="monospace" font-size="9" fill="#4ecca3">NOT FOUND</text>
+            
+            <rect x="210" y="460" width="70" height="80" rx="10" fill="#1a1a2e" stroke="#ffa07a" stroke-width="2"/>
+            <circle cx="245" cy="480" r="12" fill="#16213e" stroke="#ffa07a" stroke-width="2"/>
+            <text x="220" y="515" font-family="monospace" font-size="12" fill="#ffa07a">EOF</text>
+            
+            <rect x="550" y="510" width="40" height="30" fill="#393e46" opacity="0.7" transform="rotate(-15 570 525)"/>
+            <text x="555" y="530" font-family="monospace" font-size="12" fill="#e94560" opacity="0.8" transform="rotate(-15 570 525)">0xDEAD</text>
+            
+            <rect x="150" y="530" width="50" height="25" fill="#393e46" opacity="0.6" transform="rotate(10 175 542)"/>
+            <text x="155" y="547" font-family="monospace" font-size="11" fill="#4ecca3" opacity="0.7" transform="rotate(10 175 542)">SEGFAULT</text>
+            
+            <text x="350" y="350" font-family="monospace" font-size="40" fill="#e94560" opacity="0.3">X</text>
+            <text x="720" y="200" font-family="monospace" font-size="35" fill="#ff6b6b" opacity="0.25">X</text>
+            
+            <g opacity="0.6">
+                <rect x="50" y="250" width="60" height="40" fill="none" stroke="#4ecca3" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="58" y="273" font-family="monospace" font-size="14" fill="#4ecca3">LEAK</text>
+            </g>
+            
+            <g opacity="0.5">
+                <rect x="680" y="300" width="70" height="45" fill="none" stroke="#ffa07a" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="687" y="328" font-family="monospace" font-size="14" fill="#ffa07a">BUFFER</text>
+            </g>
+            
+            <text x="400" y="580" font-family="monospace" font-size="24" fill="#e94560" text-anchor="middle" font-weight="bold">BITROTTER DUMP</text>
+        </svg>
+        
+        <div class="instructions">
+            <p>📥 Right-click the image above and select "Save As..." to download the SVG</p>
+            <p>Or click the button below to download:</p>
+            <button onclick="downloadSVG()" style="background: #e94560; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: monospace; font-size: 16px; margin-top: 10px;">Download SVG</button>
+        </div>
+    </div>
+    
+    <script>
+        function downloadSVG() {
+            const svg = document.getElementById('bitrotterSvg');
+            const serializer = new XMLSerializer();
+            const svgString = serializer.serializeToString(svg);
+            const blob = new Blob([svgString], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'bitrotter_dump.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
